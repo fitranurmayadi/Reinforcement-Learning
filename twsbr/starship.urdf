@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<robot name="starship">
+  <!-- Main Body: silinder dengan diameter 0.1 m (radius=0.05 m) dan tinggi 1.0 m -->
+  <link name="body">
+    <inertial>
+      <!-- Asumsi massa 50 kg, inersia untuk silinder (perhitungan kasar) -->
+      <origin xyz="0 0 0" />
+      <mass value="50"/>
+      <inertia ixx="4.20" ixy="0" ixz="0" iyy="4.20" iyz="0" izz="0.0625"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+         <cylinder radius="0.05" length="1.0"/>
+      </geometry>
+      <material name="white">
+         <color rgba="0.9 0.9 0.9 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+         <cylinder radius="0.05" length="1.0"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Gimbal untuk thruster utama (rotasi terhadap sumbu Y) -->
+  <link name="gimbal_y_frame">
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="0.001"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+    </inertial>
+  </link>
+  <joint name="gimbal_y" type="revolute">
+    <!-- Pasang di bagian bawah body (z = -0.5) -->
+    <parent link="body"/>
+    <child link="gimbal_y_frame"/>
+    <origin xyz="0 0 -0.5" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-0.5" upper="0.5" effort="10" velocity="1.0"/>
+  </joint>
+
+  <!-- Gimbal kedua untuk thruster utama (rotasi terhadap sumbu X) -->
+  <joint name="gimbal_x" type="revolute">
+    <parent link="gimbal_y_frame"/>
+    <child link="thruster"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-0.5" upper="0.5" effort="10" velocity="1.0"/>
+  </joint>
+
+  <!-- Thruster Utama: berupa silinder kecil dengan panjang 5 cm (radius=0.03 m) -->
+  <link name="thruster">
+    <inertial>
+      <!-- Pusat massa berada di tengah, sehingga origin diatur ke (0, 0, -0.025) -->
+      <origin xyz="0 0 -0.025"/>
+      <mass value="5"/>
+      <inertia ixx="0.00217" ixy="0" ixz="0" iyy="0.00217" iyz="0" izz="0.00225"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 -0.025" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.03" length="0.05"/>
+      </geometry>
+      <material name="red">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.025" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.03" length="0.05"/>
+      </geometry>
+    </collision>
+  </link>
+
+</robot>

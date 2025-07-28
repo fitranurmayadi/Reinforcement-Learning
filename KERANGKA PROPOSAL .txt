@@ -1,0 +1,154 @@
+Berikut adalah kerangka proposal penelitian thesis magister teknik komputer dalam format IEEE yang telah disesuaikan dengan konteks penelitian Anda, yaitu perbandingan performa inferensi deep learning pada SBC (Raspi 5 + Hailo, Khadas Edge 2, dan Jetson Orin) untuk berbagai tugas pengenalan citra. Kerangka ini mengacu pada struktur standar IEEE dan memuat penjabaran tiap bagian, sehingga dapat dijadikan pedoman dalam penyusunan proposal yang komprehensif dan sistematis.
+
+1. Halaman Judul (Title Page)
+
+Judul Proposal: Misalnya, "Comparative Performance Analysis of SBCs for Deep Learning Inference in Image Recognition Tasks"
+
+Nama penulis, afiliasi, nama program studi, dan tanggal penyusunan.
+
+2. Abstrak (Abstract)
+
+Ringkasan singkat (200–250 kata) mengenai tujuan, permasalahan, metodologi, eksperimen yang diusulkan, dan kontribusi yang diharapkan.
+
+Cantumkan kata kunci (keywords) di bawah abstrak dalam format IEEE.
+
+3. Pendahuluan (Introduction)
+
+Latar Belakang:
+Menjelaskan perkembangan SBC dan penerapannya dalam inferensi deep learning.
+
+Motivasi:
+Alasan pentingnya penelitian ini terutama dalam konteks edge computing serta kebutuhan aplikasi real-time untuk pengenalan citra.
+
+Tujuan dan Kontribusi:
+Menjabarkan secara jelas apa yang ingin dicapai, misalnya analisis perbandingan performa antar SBC berdasarkan metrik tertentu dan kompleksitas tugas (klasifikasi, deteksi, segmentasi, deteksi + OBB, pose estimation).
+
+4. Studi Pustaka (Related Work / Literature Review)
+
+Ringkasan literatur terkait SBC dalam aplikasi deep learning, benchmarking performa pada perangkat edge, serta review algoritma seperti MobileNet, YOLO, DeepLab, dan PoseNet.
+
+Identifikasi gap penelitian dan bagaimana proposal ini mengisi kekosongan tersebut.
+
+5. Rumusan Masalah (Problem Statement)
+
+Definisikan permasalahan yang jelas terkait perbedaan performa antara SBC dalam tugas-tugas pengenalan citra.
+
+Rumuskan pertanyaan penelitian dan hipotesis, misalnya:
+
+Apakah terdapat perbedaan signifikan antara performa Raspi 5 + Hailo, Khadas Edge 2, dan Jetson Orin dalam tugas inferensi deep learning?
+
+Bagaimana pengaruh kompleksitas tugas (klasifikasi vs. deteksi vs. segmentasi vs. pose estimation) terhadap performa masing-masing SBC?
+
+6. Tujuan Penelitian dan Ruang Lingkup (Research Objectives and Scope)
+
+Tujuan:
+
+Menentukan metrik evaluasi kinerja (latensi, throughput, akurasi, efisiensi energi).
+
+Menguji performa masing-masing SBC dalam tiga skenario: satu gambar, video, dan real-time USB kamera.
+
+Menganalisis trade-off antara akurasi dan kecepatan inferensi untuk tiap jenis tugas.
+
+Ruang Lingkup:
+
+Batasan penelitian, seperti perangkat yang diuji dan model deep learning yang digunakan (misalnya, YOLOv8 untuk deteksi dengan variasi model 'n' atau 's') serta resolusi input (640×640 vs. 320×320).
+
+7. Metodologi Penelitian (Research Methodology)
+
+Desain Eksperimen:
+
+Uraikan tiga metode pengujian: satu gambar, satu video, dan real-time kamera USB.
+
+Detail Perangkat Keras:
+
+Spesifikasi singkat Raspi 5 + Hailo, Khadas Edge 2, dan Jetson Orin.
+
+Baseline komparatif menggunakan PC (Intel Core i7 + RTX 3060).
+
+Detail Algoritma dan Pemilihan Model:
+
+Untuk Klasifikasi: MobileNet atau model ringan lainnya.
+
+Untuk Deteksi/Deteksi + OBB: YOLOv8 (disarankan varian 'n' atau 's') dengan penyesuaian untuk oriented bounding box.
+
+Untuk Segmentasi: DeepLab v3+ atau U-Net versi ringan.
+
+Untuk Pose Estimation: PoseNet atau Lightweight OpenPose.
+
+Pengukuran dan Analisis:
+
+Parameter pengukuran: latensi, throughput, akurasi, efisiensi energi, dan konsumsi memori.
+
+Metode validasi, replikasi eksperimen, dan analisis statistik untuk mengonfirmasi hasil.
+
+8. Implementasi dan Infrastruktur (Implementation and Experimental Setup)
+
+Perangkat Keras dan Lingkungan Uji:
+
+Deskripsi lingkungan laboratorium dan pengaturan peralatan (SBC, kamera USB, PC baseline).
+
+Perangkat Lunak dan Framework:
+
+Rincian software yang digunakan (contoh: TensorFlow Lite, PyTorch, NVIDIA TensorRT) dan penyesuaian framework untuk masing-masing SBC.
+
+Pipeline Inference:
+
+Penjelasan alur kerja mulai dari input data (gambar/video) hingga output inferensi, termasuk tahap preprocessing dan post-processing.
+
+9. Evaluasi dan Analisis Hasil (Evaluation and Analysis)
+
+Metode Analisis Data:
+
+Cara pengolahan hasil eksperimen dan pembandingan data antar perangkat.
+
+Kriteria Sukses:
+
+Penentuan apakah target-target seperti real-time performance dan akurasi deteksi terpenuhi.
+
+Diskusi Hasil yang Diharapkan:
+
+Interpretasi atas perbedaan performa berdasarkan metrik dan bagaimana hal ini dapat digunakan untuk rekomendasi pemilihan SBC.
+
+10. Timeline dan Rencana Kerja (Project Timeline and Work Plan)
+
+Timeline:
+
+Gantt chart atau tabel yang menunjukkan fase-fase penelitian (studi literatur, perancangan eksperimen, implementasi, pengujian, analisis, penulisan laporan).
+
+Milestone:
+
+Pencapaian penting dalam setiap tahap penelitian.
+
+11. Kontribusi dan Inovasi (Expected Contributions and Innovations)
+
+Kontribusi Ilmiah:
+
+Penambahan pengetahuan pada bidang edge computing dan deep learning.
+
+Inovasi Praktis:
+
+Rekomendasi konkret untuk pemilihan SBC yang optimal sesuai kompleksitas aplikasi pengenalan citra.
+
+12. Kesimpulan (Conclusion)
+
+Menyimpulkan kembali tujuan proposal dan menekankan pentingnya penelitian ini.
+
+Pernyataan tentang dampak potensial terhadap aplikasi real-time dan pengembangan teknologi edge AI.
+
+13. Daftar Pustaka (References)
+
+Gunakan format sitasi IEEE untuk merujuk semua literatur, sumber data, dan artikel terkait.
+
+Pastikan referensi yang digunakan terkini dan relevan dengan topik penelitian.
+
+14. Lampiran (Appendices) – Opsional
+
+Dokumen pendukung seperti spesifikasi teknis detail dari SBC, formulir pengujian, atau data awal jika diperlukan.
+
+Catatan Tambahan:
+
+Pastikan setiap bagian tersusun rapi dengan sub-judul dan penomoran yang konsisten sesuai pedoman IEEE.
+
+Proposal harus memperhatikan kesinambungan logika dari latar belakang hingga metodologi dan evaluasi, serta menunjukkan bahwa penelitian ini dapat menghasilkan rekomendasi yang aplikatif dalam pemilihan SBC untuk aplikasi deep learning real-time.
+
+Kerangka proposal di atas diharapkan dapat menjadi panduan yang jelas dan terstruktur untuk penyusunan proposal penelitian thesis Anda. Jika ada bagian yang ingin didalami atau disesuaikan lebih lanjut, silakan informasikan agar dapat kita perbaiki atau lengkapi sesuai kebutuhan.

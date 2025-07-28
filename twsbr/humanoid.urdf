@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<robot name="starship">
+    
+    <!-- Link utama (badan roket) -->
+    <link name="body">
+        <inertial>
+            <origin xyz="0 0 5"/>
+            <mass value="120000"/>
+            <inertia ixx="50000" ixy="0" ixz="0" iyy="50000" iyz="0" izz="100000"/>
+        </inertial>
+        <visual>
+            <geometry>
+                <cylinder radius="4" length="50"/>
+            </geometry>
+            <material name="silver">
+                <color rgba="0.8 0.8 0.8 1"/>
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="4" length="50"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <!-- Mesin utama -->
+    <link name="engine">
+        <inertial>
+            <origin xyz="0 0 0.5"/>
+            <mass value="5000"/>
+            <inertia ixx="500" ixy="0" ixz="0" iyy="500" iyz="0" izz="1000"/>
+        </inertial>
+        <visual>
+            <geometry>
+                <cylinder radius="1" length="2"/>
+            </geometry>
+            <material name="black">
+                <color rgba="0.1 0.1 0.1 1"/>
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="1" length="2"/>
+            </geometry>
+        </collision>
+    </link>
+    
+    <!-- Hubungan mesin dengan badan -->
+    <joint name="body_to_engine" type="fixed">
+        <parent link="body"/>
+        <child link="engine"/>
+        <origin xyz="0 0 -26"/>
+    </joint>
+
+    <!-- Sirip bawah -->
+    <link name="fin1">
+        <visual>
+            <geometry>
+                <box size="2 1 5"/>
+            </geometry>
+            <material name="grey">
+                <color rgba="0.5 0.5 0.5 1"/>
+            </material>
+        </visual>
+    </link>
+    
+    <joint name="body_to_fin1" type="fixed">
+        <parent link="body"/>
+        <child link="fin1"/>
+        <origin xyz="-3.5 0 -20"/>
+    </joint>
+
+    <link name="fin2">
+        <visual>
+            <geometry>
+                <box size="2 1 5"/>
+            </geometry>
+            <material name="grey"/>
+        </visual>
+    </link>
+    
+    <joint name="body_to_fin2" type="fixed">
+        <parent link="body"/>
+        <child link="fin2"/>
+        <origin xyz="3.5 0 -20"/>
+    </joint>
+
+    <!-- Sirip atas -->
+    <link name="fin3">
+        <visual>
+            <geometry>
+                <box size="1.5 0.5 4"/>
+            </geometry>
+            <material name="grey"/>
+        </visual>
+    </link>
+    
+    <joint name="body_to_fin3" type="fixed">
+        <parent link="body"/>
+        <child link="fin3"/>
+        <origin xyz="-2.5 0 20"/>
+    </joint>
+    
+    <link name="fin4">
+        <visual>
+            <geometry>
+                <box size="1.5 0.5 4"/>
+            </geometry>
+            <material name="grey"/>
+        </visual>
+    </link>
+    
+    <joint name="body_to_fin4" type="fixed">
+        <parent link="body"/>
+        <child link="fin4"/>
+        <origin xyz="2.5 0 20"/>
+    </joint>
+
+</robot>

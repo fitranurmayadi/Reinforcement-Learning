@@ -1,0 +1,19 @@
+maksimal vs tolerance vs ekspektasi
+
+speed
+0.5 vs 0.25 vs 0.1
+10 vs 0.125 vs 0.02
+5 vs 1.25 vs 0.2
+
+pitch
+0.25 vs 0.1 vs 0.05
+0.625 vs 0.1 vs 0.025
+6.5 vs 1 vs 0.25
+
+yaw
+0.90 vs 0.5 vs 0.125
+8.1 vs 2.5 vs 0.156
+81 vs 25 vs 1.56
+
+
+

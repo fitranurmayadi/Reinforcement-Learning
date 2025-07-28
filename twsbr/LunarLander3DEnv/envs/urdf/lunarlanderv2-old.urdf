@@ -1,0 +1,753 @@
+<?xml version="1.0"?>
+<robot name="lunar_lander">
+  
+  <!-- ===================================================== -->
+  <!-- 1) MAIN BODY: Silinder dengan diameter 1 m, tinggi 1 m -->
+  <!-- ===================================================== -->
+  <link name="main_body">
+    <inertial>
+      <!-- Visual/main link origin di (0,0,0) tetapi CoM ter-offset ke (0,0,0.5) -->
+      <origin xyz="0 0 0.5" rpy="0 0 0"/>
+      <mass value="110"/>
+      <!-- Perhitungan inersia untuk silinder dengan M=110, R=0.5, L=1.0 -->
+      <inertia ixx="16.04" ixy="0" ixz="0" iyy="16.04" iyz="0" izz="13.75"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <!-- Gunakan file mesh MainBody.dae, skala 1 -->
+        <mesh filename="meshesv2/MainBody.dae" scale="1 1 1"/>
+      </geometry>
+      <material name="silver">
+        <color rgba="0.8 0.8 0.8 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshesv2/MainBody.dae" scale="1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <!-- ===================================================== -->
+  <!-- 2) MAIN THRUSTER -->
+  <!-- ===================================================== -->
+  <link name="main_thruster">
+    <inertial>
+      <!-- CoM pada main_thruster: (0,0,0.43) relatif ke origin link main_thruster -->
+      <origin xyz="0 0 0.43" rpy="0 0 0"/>
+      <mass value="20"/>
+      <inertia ixx="0.5" ixy="0" ixz="0" iyy="0.5" iyz="0" izz="0.2"/>
+    </inertial>
+    <visual>
+      <!-- Nozzle: letakkan di (0,0,-0.16) relatif ke main_thruster -->
+      <!-- <origin xyz="0 0 -0.16" rpy="0 0 0"/> -->
+      <origin xyz="0 0 0.0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshesv2/MainThruster.dae" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshesv2/MainThruster.dae" scale="1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <joint name="main_thruster_joint" type="fixed">
+    <parent link="main_body"/>
+    <!-- Pasang main_thruster di bawah main body, misalnya di (0,0,-0.5) -->
+    <child link="main_thruster"/>
+    <origin xyz="0 0 0.0" rpy="0 0 0"/>
+  </joint>
+  
+  <!-- ===================================================== -->
+  <!-- 3) RCS Thrusters (4 buah) -->
+  <!-- ===================================================== -->
+  <!-- RCS Front (RCSF): ditempatkan di sisi depan, origin: (0.55, 0, 0.6) -->
+  <link name="rcs_front">
+    <inertial>
+      <origin xyz="0.55 0 0.6" rpy="0 0 0"/>
+      <mass value="5"/>
+      <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshesv2/RCSF.dae" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshesv2/RCSF.dae" scale="1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <joint name="rcs_front_joint" type="fixed">
+    <parent link="main_body"/>
+    <child link="rcs_front"/>
+    <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+  </joint>
+  
+  <!-- RCS Back (RCSB): origin di (-0.55, 0, 0.6) -->
+  <link name="rcs_back">
+    <inertial>
+      <origin xyz="-0.55 0 0.6" rpy="0 0 0"/>
+      <mass value="5"/>
+      <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshesv2/RCSB.dae" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshesv2/RCSB.dae" scale="1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <joint name="rcs_back_joint" type="fixed">
+    <parent link="main_body"/>
+    <child link="rcs_back"/>
+    <origin xyz="0 0 0 " rpy="0 0 0"/>
+  </joint>
+  
+  <!-- RCS Left (RCSL): origin di (0, 0.55, 0.6) -->
+  <link name="rcs_left">
+    <inertial>
+      <origin xyz="0 0.55 0.6" rpy="0 0 0"/>
+      <mass value="5"/>
+      <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshesv2/RCSL.dae" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshesv2/RCSL.dae" scale="1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <joint name="rcs_left_joint" type="fixed">
+    <parent link="main_body"/>
+    <child link="rcs_left"/>
+    <origin xyz="0 0 0 " rpy="0 0 0"/>
+  </joint>
+  
+  <!-- RCS Right (RCSR): origin di (0, -0.55, 0.6) -->
+  <link name="rcs_right">
+    <inertial>
+      <origin xyz="0 -0.55 0.6" rpy="0 0 0"/>
+      <mass value="5"/>
+      <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshesv2/RCSR.dae" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshesv2/RCSR.dae" scale="1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <joint name="rcs_right_joint" type="fixed">
+    <parent link="main_body"/>
+    <child link="rcs_right"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  
+  <!-- ===================================================== -->
+  <!-- 4) LEGS (4 buah) -->
+  <!-- ===================================================== -->
+  <!-- Leg Front Left (LegFL) -->
+  <link name="leg_front_left">
+    <inertial>
+      <origin xyz="0.385 0.385 -0.121" rpy="0 0 0"/>
+      <mass value="5"/>
+      <inertia ixx="0.02" ixy="0" ixz="0" iyy="0.02" iyz="0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshesv2/LegFL.dae" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshesv2/LegFL.dae" scale="1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="leg_front_left_joint" type="fixed">
+    <parent link="main_body"/>
+    <child link="leg_front_left"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  
+  <!-- Leg Front Right (LegFR) -->
+  <link name="leg_front_right">
+    <inertial>
+      <origin xyz="0.385 -0.385 -0.121" rpy="0 0 0"/>
+      <mass value="5"/>
+      <inertia ixx="0.02" ixy="0" ixz="0" iyy="0.02" iyz="0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshesv2/LegFR.dae" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshesv2/LegFR.dae" scale="1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="leg_front_right_joint" type="fixed">
+    <parent link="main_body"/>
+    <!-- Pasang di (0.385, -0.385, -0.121) -->
+    <child link="leg_front_right"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  
+  <!-- Leg Back Left (LegBL) -->
+  <link name="leg_back_left">
+    <inertial>
+      <origin xyz="-0.385 0.385 -0.121" rpy="0 0 0"/>
+      <mass value="5"/>
+      <inertia ixx="0.02" ixy="0" ixz="0" iyy="0.02" iyz="0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshesv2/LegBL.dae" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshesv2/LegBL.dae" scale="1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="leg_back_left_joint" type="fixed">
+    <parent link="main_body"/>
+    <!-- Pasang di (-0.385, 0.385, -0.121) -->
+    <child link="leg_back_left"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  
+  <!-- Leg Back Right (LegBR) -->
+  <link name="leg_back_right">
+    <inertial>
+      <origin xyz="-0.385 -0.385 -0.121" rpy="0 0 0"/>
+      <mass value="5"/>
+      <inertia ixx="0.02" ixy="0" ixz="0" iyy="0.02" iyz="0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshesv2/LegBR.dae" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshesv2/LegBR.dae" scale="1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="leg_back_right_joint" type="fixed">
+    <parent link="main_body"/>
+    <!-- Pasang di (-0.385, -0.385, -0.121) -->
+    <child link="leg_back_right"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  
+  <!-- ===================================================== -->
+  <!-- 5) SENSOR KAKI (opsional, bisa digabungkan dalam visual kaki) -->
+  <!-- Untuk contoh, kita hanya menunjukkan sensor untuk Leg Front Left -->
+  <link name="leg_front_left_sensor">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.0625"/>
+      </geometry>
+      <material name="red">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.0625"/>
+      </geometry>
+      <material name="red">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </collision>
+  </link>
+  <joint name="leg_front_left_sensor_joint" type="fixed">
+    <parent link="leg_front_left"/>
+    <child link="leg_front_left_sensor"/>
+    <origin xyz="0.505 0.505 -0.415" rpy="0 0 0"/>
+  </joint>
+
+  <link name="leg_back_right_sensor">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.0625"/>
+      </geometry>
+      <material name="red">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.0625"/>
+      </geometry>
+      <material name="red">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </collision>
+  </link>
+  <joint name="leg_back_right_sensor_joint" type="fixed">
+    <parent link="leg_back_right"/>
+    <child link="leg_back_right_sensor"/>
+    <origin xyz="-0.505 -0.505 -0.415" rpy="0 0 0"/>
+  </joint>
+  
+  <link name="leg_front_right_sensor">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.0625"/>
+      </geometry>
+      <material name="red">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.0625"/>
+      </geometry>
+      <material name="red">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </collision>
+  </link>
+  <joint name="leg_front_right_sensor_joint" type="fixed">
+    <parent link="leg_front_right"/>
+    <child link="leg_front_right_sensor"/>
+    <origin xyz="0.505 -0.505 -0.415" rpy="0 0 0"/>
+  </joint>
+
+  <link name="leg_back_left_sensor">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.0625"/>
+      </geometry>
+      <material name="red">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.0625"/>
+      </geometry>
+      <material name="red">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </collision>
+  </link>
+  <joint name="leg_back_left_sensor_joint" type="fixed">
+    <parent link="leg_back_left"/>
+    <child link="leg_back_left_sensor"/>
+    <origin xyz="-0.505 0.505 -0.415" rpy="0 0 0"/>
+  </joint>
+  
+
+  <!-- RCSF Thruster Directions -->
+    <link name="rcsf_x_neg_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0625"/>
+        </geometry>
+        <material name="red">
+          <color rgba="1 0 0 1"/>
+        </material>
+      </visual>
+    </link>
+    <joint name="rcsf_x_neg_joint" type="fixed">
+        <parent link="rcs_front"/>
+        <child link="rcsf_x_neg_link"/>
+        <origin xyz="0.700 0 0.600"/>
+    </joint>
+   
+    
+    <link name="rcsf_y_pos_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0625"/>
+        </geometry>
+        <material name="red">
+          <color rgba="1 0 0 1"/>
+        </material>
+      </visual>
+    </link>
+    <joint name="rcsf_y_pos_joint" type="fixed">
+        <parent link="rcs_front"/>
+        <child link="rcsf_y_pos_link"/>
+        <origin xyz="0.550 -0.150 0.600"/>
+    </joint>
+
+    
+    <link name="rcsf_y_neg_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0625"/>
+        </geometry>
+        <material name="red">
+          <color rgba="1 0 0 1"/>
+        </material>
+      </visual>
+    </link>
+    <joint name="rcsf_y_neg_joint" type="fixed">
+        <parent link="rcs_front"/>
+        <child link="rcsf_y_neg_link"/>
+        <origin xyz="0.550 0.150 0.600"/>
+    </joint>
+ 
+    
+    <link name="rcsf_z_pos_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0625"/>
+        </geometry>
+        <material name="red">
+          <color rgba="1 0 0 1"/>
+        </material>
+      </visual>
+    </link>
+    <joint name="rcsf_z_pos_joint" type="fixed">
+        <parent link="rcs_front"/>
+        <child link="rcsf_z_pos_link"/>
+        <origin xyz="0.550 0 0.450"/>
+    </joint>
+  
+    
+    <link name="rcsf_z_neg_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0625"/>
+        </geometry>
+        <material name="red">
+          <color rgba="1 0 0 1"/>
+        </material>
+      </visual>
+    </link>
+    <joint name="rcsf_z_neg_joint" type="fixed">
+        <parent link="rcs_front"/>
+        <child link="rcsf_z_neg_link"/>
+        <origin xyz="0.550 0 0.750"/>
+    </joint>
+    
+      <!-- RCSB Thruster Directions -->
+    <link name="rcsb_x_pos_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0625"/>
+        </geometry>
+        <material name="red">
+          <color rgba="1 0 0 1"/>
+        </material>
+      </visual>
+    </link>
+    <joint name="rcsb_x_pos_joint" type="fixed">
+        <parent link="rcs_back"/>
+        <child link="rcsb_x_pos_link"/>
+        <origin xyz="-0.700 0 0.600"/>
+    </joint>
+   
+    
+    <link name="rcsb_y_pos_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0625"/>
+        </geometry>
+        <material name="red">
+          <color rgba="1 0 0 1"/>
+        </material>
+      </visual>
+    </link>
+    <joint name="rcsb_y_pos_joint" type="fixed">
+        <parent link="rcs_back"/>
+        <child link="rcsb_y_pos_link"/>
+        <origin xyz="-0.550 -0.150 0.600"/>
+    </joint>
+
+    
+    <link name="rcsb_y_neg_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0625"/>
+        </geometry>
+        <material name="red">
+          <color rgba="1 0 0 1"/>
+        </material>
+      </visual>
+    </link>
+    <joint name="rcsb_y_neg_joint" type="fixed">
+        <parent link="rcs_back"/>
+        <child link="rcsb_y_neg_link"/>
+        <origin xyz="-0.550 0.150 0.600"/>
+    </joint>
+ 
+    
+    <link name="rcsb_z_pos_link">
+      <visual>
+        <origin xyz="0 0 " rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0625"/>
+        </geometry>
+        <material name="red">
+          <color rgba="1 0 0 1"/>
+        </material>
+      </visual>
+    </link>
+    <joint name="rcsb_z_pos_joint" type="fixed">
+        <parent link="rcs_back"/>
+        <child link="rcsb_z_pos_link"/>
+        <origin xyz="-0.550 0 0.450"/>
+    </joint>
+  
+    
+    <link name="rcsb_z_neg_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0625"/>
+        </geometry>
+        <material name="red">
+          <color rgba="1 0 0 1"/>
+        </material>
+      </visual>
+    </link>
+    <joint name="rcsb_z_neg_joint" type="fixed">
+        <parent link="rcs_back"/>
+        <child link="rcsb_z_neg_link"/>
+        <origin xyz="-0.550 0 0.750"/>
+    </joint>
+
+    <!-- RCSL Thruster Directions -->
+    <link name="rcsl_x_pos_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0625"/>
+        </geometry>
+        <material name="red">
+          <color rgba="1 0 0 1"/>
+        </material>
+      </visual>
+    </link>
+    <joint name="rcsl_x_pos_joint" type="fixed">
+        <parent link="rcs_left"/>
+        <child link="rcsl_x_pos_link"/>
+        <origin xyz="-0.150 0.550 0.600"/>
+    </joint>
+
+
+    <link name="rcsl_x_neg_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0625"/>
+        </geometry>
+        <material name="red">
+          <color rgba="1 0 0 1"/>
+        </material>
+      </visual>
+    </link>
+    <joint name="rcsl_x_neg_joint" type="fixed">
+        <parent link="rcs_left"/>
+        <child link="rcsl_x_neg_link"/>
+        <origin xyz="0.150 0.550 0.600"/>
+    </joint>
+   
+    
+    <link name="rcsl_y_neg_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0625"/>
+        </geometry>
+        <material name="red">
+          <color rgba="1 0 0 1"/>
+        </material>
+      </visual>
+    </link>
+    <joint name="rcsl_y_neg_joint" type="fixed">
+        <parent link="rcs_left"/>
+        <child link="rcsl_y_neg_link"/>
+        <origin xyz="0.0 0.700 0.600"/>
+    </joint>
+ 
+    
+    <link name="rcsl_z_pos_link">
+      <visual>
+        <origin xyz="0  0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0625"/>
+        </geometry>
+        <material name="red">
+          <color rgba="1 0 0 1"/>
+        </material>
+      </visual>
+    </link>
+    <joint name="rcsl_z_pos_joint" type="fixed">
+        <parent link="rcs_left"/>
+        <child link="rcsl_z_pos_link"/>
+        <origin xyz="0.0 0.550 0.450"/>
+    </joint>
+  
+    <link name="rcsl_z_neg_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0625"/>
+        </geometry>
+        <material name="red">
+          <color rgba="1 0 0 1"/>
+        </material>
+      </visual>
+    </link>
+    <joint name="rcsl_z_neg_joint" type="fixed">
+        <parent link="rcs_left"/>
+        <child link="rcsl_z_neg_link"/>
+        <origin xyz="0. 0.550 0.750"/>
+    </joint>
+
+          <!-- RCSR Thruster Directions -->
+    <link name="rcsr_x_pos_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0625"/>
+        </geometry>
+        <material name="red">
+          <color rgba="1 0 0 1"/>
+        </material>
+      </visual>
+    </link>
+    <joint name="rcsr_x_pos_joint" type="fixed">
+        <parent link="rcs_right"/>
+        <child link="rcsr_x_pos_link"/>
+        <origin xyz="-0.150 -0.550 0.600"/>
+    </joint>
+
+
+    <link name="rcsr_x_neg_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0625"/>
+        </geometry>
+        <material name="red">
+          <color rgba="1 0 0 1"/>
+        </material>
+      </visual>
+    </link>
+    <joint name="rcsr_x_neg_joint" type="fixed">
+        <parent link="rcs_right"/>
+        <child link="rcsr_x_neg_link"/>
+        <origin xyz="0.150 -0.550 0.600"/>
+    </joint>
+   
+    <link name="rcsr_y_pos_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0625"/>
+        </geometry>
+        <material name="red">
+          <color rgba="1 0 0 1"/>
+        </material>
+      </visual>
+    </link>
+    <joint name="rcsr_y_pos_joint" type="fixed">
+        <parent link="rcs_right"/>
+        <child link="rcsr_y_pos_link"/>
+        <origin xyz="0.0 -0.700 0.600"/>
+    </joint>
+
+    
+    <link name="rcsr_z_pos_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0625"/>
+        </geometry>
+        <material name="red">
+          <color rgba="1 0 0 1"/>
+        </material>
+      </visual>
+    </link>
+    <joint name="rcsr_z_pos_joint" type="fixed">
+        <parent link="rcs_right"/>
+        <child link="rcsr_z_pos_link"/>
+        <origin xyz="0.0 -0.550 0.450"/>
+    </joint>
+  
+    
+    <link name="rcsr_z_neg_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0625"/>
+        </geometry>
+        <material name="red">
+          <color rgba="1 0 0 1"/>
+        </material>
+      </visual>
+    </link>
+    <joint name="rcsr_z_neg_joint" type="fixed">
+        <parent link="rcs_right"/>
+        <child link="rcsr_z_neg_link"/>
+        <origin xyz="0.0 -0.550 0.750"/>
+    </joint>
+
+</robot>

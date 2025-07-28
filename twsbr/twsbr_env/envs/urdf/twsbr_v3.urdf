@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<robot name="Self_Balancing_Robot">
+  <!-- Chassis -->
+  <link name="Chassis">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/Robot_V3.dae" />
+      </geometry>
+      <origin xyz="0 0 0.0" rpy="0 0 0"/> 
+      <material name="ChassisMaterial">
+        <color rgba="0.75 0.75 0.75 1"/>  <!-- Warna abu-abu untuk chassis -->
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="meshes/Robot_V3.dae" />
+      </geometry>
+      <origin xyz="0 0 0.0" rpy="0 0 0"/> 
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0.07" rpy="0 0 0"/>
+      <mass value="0.478"/>
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.0013" iyz="0" izz="0.0001"/>
+    </inertial>
+  </link>
+
+  <!-- Left Wheel -->
+  <link name="Left_Wheel">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/wheel_left.dae"  />
+      </geometry>
+      <origin xyz="0 0.0 0.0" rpy="0 0 -1.5708"/> 
+      <material name="WheelMaterial">
+        <color rgba="1 0 0 1"/>  <!-- Warna merah untuk roda Kiri -->
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="meshes/wheel_left.dae"  />
+      </geometry>
+      <origin xyz="0 0.0 0.0" rpy="0 0 -1.5708"/> 
+    </collision>
+    <inertial>
+      <origin xyz="0 0.0 0.0" rpy="0 0 0"/>
+      <mass value="0.015"/>
+      <inertia ixx="0.00" ixy="0" ixz="0" iyy="0.000" iyz="0" izz="0.00"/>
+    </inertial>
+  </link>
+
+  <!-- Right Wheel -->
+  <link name="Right_Wheel">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/wheel_right.dae" />
+      </geometry>
+      <origin xyz="0 0.0 0.0" rpy="0 0 1.5708"/>  
+      <material name="Wheel_R_Material">
+        <color rgba="1 1 1 1"/>  <!-- Warna putih untuk roda Kanan-->
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="meshes/wheel_right.dae" />
+      </geometry>
+      <origin xyz="0 0.0 0.0" rpy="0 0 1.5708"/> 
+    </collision>
+    <inertial>
+      <origin xyz="0 0.0 0.00" rpy="0 0 0"/>
+      <mass value="0.015"/>
+      <inertia ixx="0.00" ixy="0" ixz="0" iyy="0.00" iyz="0" izz="0.00"/>
+    </inertial>
+  </link>
+
+
+  <!-- Left Wheel Joint -->
+  <joint name="left_wheel_joint" type="continuous">
+    <parent link="Chassis"/>
+    <child link="Left_Wheel"/>
+    <origin xyz="0.0 0.075 0.030" rpy="0 0 0"/>
+    <limit effort="0.05" velocity="1000"/> <!--effort = force-->
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <!-- Right Wheel Joint -->
+  <joint name="right_wheel_joint" type="continuous">
+    <parent link="Chassis"/>
+    <child link="Right_Wheel"/>
+    <origin xyz="0.0 -0.075 0.030" rpy="0 0 0"/>
+    <limit effort="0.05" velocity="1000"/> <!--efort = force-->
+    <axis xyz="0 1 0"/>
+  </joint>
+
+</robot>

@@ -1,0 +1,106 @@
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <contributor />
+    <created>2024-12-20T10:53:19.774048</created>
+    <modified>2024-12-20T10:53:19.774048</modified>
+    <unit name="meter" meter="1.0" />
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_effects>
+    <effect id="effect_b_Upper_Arm_001_" name="effect_b_Upper_Arm_001_">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0.0 0.0 0.0 1.0</color>
+            </emission>
+            <ambient>
+              <color>0.0 0.0 0.0 1.0</color>
+            </ambient>
+            <diffuse>
+              <color>0.800000011920929 0.800000011920929 0.800000011920929 1.0</color>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1.0</color>
+            </specular>
+            <shininess>
+              <float>0.0</float>
+            </shininess>
+            <reflective>
+              <color>0.0 0.0 0.0 1.0</color>
+            </reflective>
+            <reflectivity>
+              <float>0.0</float>
+            </reflectivity>
+            <transparent>
+              <color>0.0 0.0 0.0 1.0</color>
+            </transparent>
+            <transparency>
+              <float>1.0</float>
+            </transparency>
+          </phong>
+        </technique>
+        <extra>
+          <technique profile="GOOGLEEARTH">
+            <double_sided>0</double_sided>
+          </technique>
+        </extra>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_geometries>
+    <geometry id="geometry0" name="b_Upper_Arm_001_">
+      <mesh>
+        <source id="cubeverts-array0">
+          <float_array count="72" id="cubeverts-array0-array">0.17 0.04 0.48 0.25 0.04 0.34 0.17 0.04 0.34 0.25 0.04 0.48 0.25 0.03 0.26 0.25 0.03 0.34 0.25 -0.03 0.26 0.25 -0.03 0.34 0.25 -0.03 0.48 0.25 -0.04 0.34 0.25 -0.04 0.48 0.25 0.03 0.48 0.25 0.03 0.56 0.25 -0.03 0.56 0.17 0.03 0.48 0.17 0.03 0.34 0.17 0.03 0.26 0.17 -0.03 0.26 0.17 -0.03 0.34 0.17 -0.03 0.48 0.17 -0.04 0.34 0.17 -0.04 0.48 0.17 0.03 0.56 0.17 -0.03 0.56</float_array>
+          <technique_common>
+            <accessor count="24" source="#cubeverts-array0-array" stride="3">
+              <param type="float" name="X" />
+              <param type="float" name="Y" />
+              <param type="float" name="Z" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="cubenormals-array0">
+          <float_array count="132" id="cubenormals-array0-array">0 1 0 0 1 0 1 0 -0 1 0 0 1 0 -0 1 0 0 1 0 -0 1 0 0 1 0 -0 1 0 0 1 0 0 1 0 -0 0 0 1 0 0 1 -1 0 -0 -1 -0 0 -1 0 -0 -1 -0 0 -1 0 -0 -1 -0 0 -1 0 -0 -1 -0 0 -1 -0 0 -1 0 -0 0 0 -1 0 0 -1 0 1 0 0 1 -0 0 -0 1 0 0 1 0 -1 0 0 -1 -0 0 0 1 0 0 1 0 -1 0 0 -1 0 0 0 -1 0 0 -1 0 -1 0 0 -1 -0 0 -0 -1 -0 0 -1 0 1 0 0 1 -0</float_array>
+          <technique_common>
+            <accessor count="44" source="#cubenormals-array0-array" stride="3">
+              <param type="float" name="X" />
+              <param type="float" name="Y" />
+              <param type="float" name="Z" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="cubeverts-array0-vertices">
+          <input semantic="POSITION" source="#cubeverts-array0" />
+        </vertices>
+        <triangles count="44" material="ref_b_Upper_Arm_001_">
+          <input offset="0" semantic="VERTEX" source="#cubeverts-array0-vertices" />
+          <input offset="1" semantic="NORMAL" source="#cubenormals-array0" />
+          <p>0 0 1 0 2 0 3 1 1 1 0 1 4 2 5 2 6 2 6 3 5 3 7 3 7 4 8 4 9 4 9 5 8 5 10 5 5 6 11 6 7 6 7 7 11 7 8 7 1 8 3 8 5 8 5 9 3 9 11 9 8 10 12 10 13 10 11 11 12 11 8 11 3 12 0 12 11 12 0 13 14 13 11 13 15 14 16 14 17 14 15 15 17 15 18 15 19 16 18 16 20 16 19 17 20 17 21 17 14 18 15 18 18 18 14 19 18 19 19 19 0 20 2 20 15 20 0 21 15 21 14 21 22 22 19 22 23 22 22 23 14 23 19 23 5 24 15 24 1 24 15 25 2 25 1 25 14 26 22 26 11 26 11 27 22 27 12 27 13 28 12 28 22 28 13 29 22 29 23 29 23 30 19 30 13 30 13 31 19 31 8 31 8 32 19 32 10 32 19 33 21 33 10 33 20 34 10 34 21 34 9 35 10 35 20 35 9 36 20 36 7 36 20 37 18 37 7 37 18 38 17 38 7 38 7 39 17 39 6 39 4 40 6 40 17 40 4 41 17 41 16 41 16 42 15 42 4 42 4 43 15 43 5 43</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_materials>
+    <material id="mat_b_Upper_Arm_001_" name="b_Upper_Arm_001_">
+      <instance_effect url="#effect_b_Upper_Arm_001_" />
+    </material>
+  </library_materials>
+  <library_visual_scenes>
+    <visual_scene id="myscene">
+      <node id="node0" name="node0">
+        <instance_geometry url="#geometry0">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="ref_b_Upper_Arm_001_" target="#mat_b_Upper_Arm_001_" />
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#myscene" />
+  </scene>
+</COLLADA>

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<robot name="plane">
+  <link name="plane_link">
+    <collision>
+      <geometry>
+        <plane/>
+      </geometry>
+    </collision>
+    <visual>
+      <geometry>
+        <plane/>
+      </geometry>
+    </visual>
+  </link>
+</robot>

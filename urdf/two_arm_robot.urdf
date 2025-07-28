@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<robot name="Two_Arm_Robot">
+  <link name="Bottom_Chassis">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/Assembly-Main_Body_001.dae" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 1.5708"/> 
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="meshes/Assembly-Main_Body_001.dae" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 1.5708"/> 
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0.075" rpy="0 0 1.5708"/>
+      <mass value="0.498"/>
+      <inertia ixx="1.588" ixy="0" ixz="0" iyy="1.388" iyz="0" izz="2.178"/>
+    </inertial>
+  </link>
+</robot>

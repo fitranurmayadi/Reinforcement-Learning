@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<robot name="scara_robot">
+
+  <!-- Base: silinder dengan diameter 10 cm (radius 0.05 m) dan tinggi 5 cm (0.05 m) -->
+  <link name="base_link">
+    <inertial>
+      <origin xyz="0 0 0.025" rpy="0 0 0"/>
+      <mass value="1.0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.025" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.05" length="0.05"/>
+      </geometry>
+      <material name="gray">
+        <color rgba="0.8 0.8 0.8 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.025" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.05" length="0.05"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Link1: lengan pertama (box 20x2x2 cm) -->
+  <link name="link1">
+    <inertial>
+      <!-- Titik pusat di tengah box: 0.1 m dari ujung joint -->
+      <origin xyz="0.1 0 0" rpy="0 0 0"/>
+      <mass value="0.5"/>
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <!-- Posisi visual agar box terletak mulai dari origin joint -->
+      <origin xyz="0.1 0 0.01" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.20 0.02 0.02"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.1 0 0.01" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.20 0.02 0.02"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Link2: lengan kedua (box 20x2x2 cm) -->
+  <link name="link2">
+    <inertial>
+      <origin xyz="0.1 0 0" rpy="0 0 0"/>
+      <mass value="0.5"/>
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.1 0 0.01" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.20 0.02 0.02"/>
+      </geometry>
+      <material name="red">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.1 0 0.01" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.20 0.02 0.02"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Joint1: antara base dan link1, revolute (rotasi pada sumbu Z) -->
+  <joint name="joint1" type="revolute">
+    <parent link="base_link"/>
+    <child link="link1"/>
+    <!-- Tempatkan joint pada puncak base -->
+    <origin xyz="0 0 0.05" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14" upper="3.14" effort="10" velocity="1.0"/>
+  </joint>
+
+  <!-- Joint2: antara link1 dan link2, revolute (rotasi pada sumbu Z) -->
+  <joint name="joint2" type="revolute">
+    <parent link="link1"/>
+    <child link="link2"/>
+    <!-- Tempatkan joint pada ujung link1 -->
+    <origin xyz="0.20 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14" upper="3.14" effort="10" velocity="1.0"/>
+  </joint>
+
+</robot>

@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<robot name="rocket">
+
+  <!-- ====================== -->
+  <!-- 1) LINK: MAIN BODY    -->
+  <!-- ====================== -->
+  <link name="main_body">
+    <inertial>
+      <!-- Titik acuan inertial berada di tengah roket (0,0,0.5) -->
+      <origin xyz="0 0 0.5" rpy="0 0 0"/>
+      <!-- Total massa 10 kg -->
+      <mass value="10.0"/>
+      <!-- Inersia silinder solid: 
+           I_z = 0.5 * m * r^2 = 0.5*10*(0.05^2) = 0.0125 
+           I_x = I_y = (1/12)*m*(3r^2+h^2) ≈ (10/12)*(3*0.0025+1) ≈ 0.84  -->
+      <inertia ixx="0.84" ixy="0.0" ixz="0.0"
+               iyy="0.84" iyz="0.0"
+               izz="0.0125"/>
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshes/mini_rocket_main_body.dae" scale="1 1 1"/>
+      </geometry>
+      <material name="white">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshes/mini_rocket_main_body.dae" scale="1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ====================================== -->
+  <!-- 2) JOINT: MAIN_BODY -> PLATE (Revolute, sumbu X) -->
+  <!--    Terletak di ketinggian 0.02 m dari dasar -->
+  <!-- ====================================== -->
+  <joint name="plate_joint" type="revolute">
+    <parent link="main_body"/>
+    <child link="plate"/>
+    <origin xyz="0.1 0 0.02" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="100.0" velocity="100.0" lower="-1.57" upper="1.57"/>
+  </joint>
+
+  <!-- ====================== -->
+  <!-- 3) LINK: PLATE        -->
+  <!-- ====================== -->
+  <link name="plate">
+    <!-- Tidak diberi massa/inersia (massless) -->
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.0"/>
+      <inertia ixx="0.0" ixy="0.0" ixz="0.0"
+               iyy="0.0" iyz="0.0"
+               izz="0.0"/>
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshes/mini_rocket_xy.dae" scale="1 1 1"/>
+      </geometry>
+      <material name="grey">
+        <color rgba="0.0 0.0 0.5 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshes/mini_rocket_xy.dae" scale="1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ===================================================== -->
+  <!-- 4) JOINT: PLATE -> ENGINE (Revolute, sumbu Y)         -->
+  <!--    Engine terpasang tepat di atas plate (offset = 0)    -->
+  <!-- ===================================================== -->
+  <joint name="engine_joint" type="revolute">
+    <parent link="plate"/>
+    <child link="engine"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="100.0" velocity="100.0" lower="-10" upper="10"/>
+  </joint>
+
+  <!-- ====================== -->
+  <!-- 5) LINK: ENGINE       -->
+  <!-- ====================== -->
+  <link name="engine">
+    <!-- Massless -->
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.0"/>
+      <inertia ixx="0.0" ixy="0.0" ixz="0.0"
+               iyy="0.0" iyz="0.0"
+               izz="0.0"/>
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshes/mini_rocket_main_engine.dae" scale="1 1 1"/>
+      </geometry>
+      <material name="dark_grey">
+        <color rgba="0.0 0.5 0.0 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshes/mini_rocket_main_engine.dae" scale="1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ================================================== -->
+  <!-- 6) JOINT: MAIN_BODY -> RCS (Fixed)                -->
+  <!--    Terletak di ketinggian 0.95 m dari dasar       -->
+  <!-- ================================================== -->
+  <joint name="rcs_joint" type="fixed">
+    <parent link="main_body"/>
+    <child link="rcs"/>
+    <origin xyz="0 0 0.95" rpy="0 0 0"/>
+  </joint>
+
+  <!-- ====================== -->
+  <!-- 7) LINK: RCS          -->
+  <!-- ====================== -->
+  <link name="rcs">
+    <!-- Massless -->
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.0"/>
+      <inertia ixx="0.0" ixy="0.0" ixz="0.0"
+               iyy="0.0" iyz="0.0"
+               izz="0.0"/>
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshes/mini_rocket_upper_rcs.dae" scale="1 1 1"/>
+      </geometry>
+      <material name="white">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshes/mini_rocket_upper_rcs.dae" scale="1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+
+</robot>
